@@ -1,5 +1,6 @@
 # ui.py
-
+from rich.columns import Columns
+from datetime import datetime
 from rich import box
 from rich.console import Console
 from rich.panel import Panel
@@ -80,13 +81,11 @@ def center_ascii(art, width=32):
 
 
 def render(tux, repo_name, tick):
-    sys.stdout.write("\033c")  # Clear the terminal
+    sys.stdout.write("\033c")
     sys.stdout.flush()
 
-    # ASCII art with animation
+    # ASCII art + info
     art = load_ascii(tux.mood, tick)
-
-    # Build metadata text
     last_commit_td = tux.time_since_commit()
     countdown_td = tux.time_until_next_mood()
 
@@ -94,7 +93,11 @@ def render(tux, repo_name, tick):
     if last_commit_td:
         last_commit_text = f"{format_timedelta(last_commit_td)} ago"
 
-    lines = [
+    # Time string
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Tux panel
+    tux_lines = [
         art,
         "",
         f"[bold]Mood:[/bold] {tux.mood.upper()}",
@@ -104,22 +107,37 @@ def render(tux, repo_name, tick):
 
     if countdown_td:
         hunger_bar = generate_block_bar(tux, tick=tick, length=10)
-        lines.append(
+        tux_lines.append(
             f"[bold]Hungry in:[/bold] {format_timedelta(countdown_td)} {hunger_bar}"
         )
 
-    # Pad the lines to a minimum height
-    # MIN_LINES = 20
-    # while len(lines) < MIN_LINES:
-    #     lines.append("")
+    while len(tux_lines) < 5:
+        tux_lines.append("")
 
-    body = "\n".join(lines)
-
-    panel = Panel.fit(
-        Text.from_markup(body),
+    tux_panel = Panel.fit(
+        Text.from_markup("\n".join(tux_lines)),
         title="Tuxagotchi",
-        width=65,  # Set a fixed width — adjust if needed
-        box=box.ROUNDED,  # You can use box=box.ROUNDED or box.SQUARE too
+        width=62,
+        box=box.ROUNDED,
     )
 
-    console.print(panel)
+    commit_counts = tux.get_commit_counts()
+
+    stats_lines = [
+        "[bold]Stats[/bold]",
+        f" Commits (24h): {commit_counts['24h']}",
+        f" Commits (7d): {commit_counts['7d']}",
+        "",
+        f" Time: {now}",
+    ]
+
+    stats_body = "\n".join(stats_lines)
+
+    stats_panel = Panel.fit(
+        Text.from_markup(stats_body),
+        title="Stats",
+        width=30,
+        box=box.ROUNDED,
+    )
+
+    console.print(Columns([tux_panel, stats_panel]))
