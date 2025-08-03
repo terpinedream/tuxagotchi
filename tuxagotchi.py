@@ -39,8 +39,8 @@ def main():
                 print(f"[✓] Fetched new commit time: {commit_time}")
             elif not last_valid_commit_time:
                 print("[!] No commit found, and no fallback yet.")
-
-        tux.update_mood(last_valid_commit_time)
+            # tux.mood = "happy"
+            tux.update_mood(last_valid_commit_time)
         render(tux, repo_name=repo, tick=tick)
         tick += 1
         time.sleep(1)
