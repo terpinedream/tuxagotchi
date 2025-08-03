@@ -9,29 +9,29 @@
 
 ***Currently using rich for rendering***
 
-**ASSETS**
-***Stores the different ASCII art stages for Tux***
-***xxx2.txt holds a duplicate file with an additional line of padding on the top***
-***This is used to give the illusion of animations***
+**ASSETS |**
+***Stores the different ASCII art stages for Tux.***
+***xxx2.txt holds a duplicate file with an additional line of padding on the top.***
+***This is used to give the illusion of animations.***
 
-**CONFIG.TOML**
-***Holds credentials**
-***Username + Repo name***
+**CONFIG.TOML |**
+***Holds credentials.**
+***Username + Repo name.***
 
-**GITHUB.PY**
-***Handles GitHub API interactions***
+**GITHUB.PY |**
+***Handles GitHub API interactions.***
 
-**TUX.PY**
-***Holds functions for Tux's moods***
+**TUX.PY |**
+***Holds functions for Tux's moods.***
 
-**TUXAGOTCHI.PY**
-***Loads config & holds main() function***
-***Checks for new commits and "animates" Tux via tick***
-****Please note in line 28, the CHECK_INTERVAL NEEDS to be 60s****
-****This is to prevent you from hitting the API request limit****
-****Which would instantly kill Tux :(****
+**TUXAGOTCHI.PY |**
+***Loads config & holds main() function.***
+***Checks for new commits and "animates" Tux via tick.***
+****Please note in line 28, the CHECK_INTERVAL NEEDS to be 60s.****
+****This is to prevent you from hitting the API request limit.****
+****Which would instantly kill Tux :(.****
 
-**UI.PY**
-***Renders the TUI***
-***Uses rich for rendering***
-***If I can get better ASCII art/animations I will likely switch to Textual***
+**UI.PY |**
+***Renders the TUI.***
+***Uses rich for rendering.***
+***If I can get better ASCII art/animations I will likely switch to Textual.***
