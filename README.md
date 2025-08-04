@@ -35,3 +35,8 @@
 ***Renders the TUI.***
 ***Uses rich for rendering.***
 ***If I can get better ASCII art/animations I will likely switch to Textual.***
+
+*EDIT AUG 4th, 2025*
+**Holy cow, thank you guys for the support and interest in my silly project!**
+**I am currently looking into switching from rich to full textual for better rendering.**
+**This will allow for a bunch more cool implementations so stay tuned!**
