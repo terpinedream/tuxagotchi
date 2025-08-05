@@ -79,7 +79,7 @@ class TuxApp(App):
             log(f"[✓] Fetched new commit time: {commit_time}")
         elif not self.last_valid_commit_time:
             log("[!] No commit found, and no fallback yet.")
-            self.tux.mood = "sad"
+            #self.tux.mood = "sad"
 
         self.tux_widget.refresh()
 
