@@ -33,7 +33,6 @@ This version is a complete refactor using [Textual](https://textual.textualize.i
 3. Create a config file at `$XDG_CONFIG_HOME/tuxagotchi.toml` with the following structure:
     ```toml
     [github]
-    token = "your-github-pat-token-or-empty-string"
     username = "your-github-username"
     repo = "your-repo-name"
     ```
