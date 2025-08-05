@@ -3,7 +3,7 @@
 Tuxagotchi is a terminal-based companion that thrives on your GitHub activity.  
 This version is a complete refactor using [Textual](https://textual.textualize.io/), offering a dynamic terminal UI that includes commit tracking, a live-updating Tux avatar, and a todo list.
 
-![Screenshot](screenshots/v1.1/textural/screenshot_05082025_032437.jpg)
+![Screenshot](screenshots/textural/screenshot_05082025_032437.jpg)
 
 ---
 
