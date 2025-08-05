@@ -13,11 +13,13 @@ from textual_app.app import TuxApp
     "--config",
     type=click.Path(exists=True, path_type=Path),
     help="Path to the config file.",
-    default=DEFAULT_CONFIG_PATH,
 )
 def main(config: Path):
     try:
-        config = load_config(config)
+        if config is None:
+            config = load_config()
+        else:
+            config = load_config(config)
     except FileNotFoundError as e:
         with open(DEFAULT_CONFIG_PATH, "w", encoding="UTF-8") as f:
             toml.dump(DEFAULT_CONFIG, f)
