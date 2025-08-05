@@ -65,3 +65,4 @@ class TuxWidget(Widget):
             width=60,
             box=box.ROUNDED,
         )
+
