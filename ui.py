@@ -16,13 +16,13 @@ def load_ascii(mood, tick):
     alt_path = f"assets/{mood}2.txt"
 
     try:
-        with open(base_path) as f:
+        with open(base_path, encoding="utf-8") as f:
             base_lines = f.readlines()
     except FileNotFoundError:
         base_lines = ["(?)\n"]
 
     try:
-        with open(alt_path) as f:
+        with open(alt_path, encoding="utf-8") as f:
             alt_lines = f.readlines()
     except FileNotFoundError:
         alt_lines = base_lines
