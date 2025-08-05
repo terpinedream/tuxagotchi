@@ -30,16 +30,14 @@ This version is a complete refactor using [Textual](https://textual.textualize.i
    pip install -r requirements.txt
    ```
 
-3. Create a `config.json` file in the root directory with the following structure:
-   ```json
-   {
-     "github": {
-       "username": "your-github-username",
-       "repo": "your-repo-name"
-     }
-   }
-   ```
-
+3. Create a config file at `$XDG_CONFIG_HOME/tuxagotchi.toml` with the following structure:
+    ```toml
+    [github]
+    token = "your-github-pat-token-or-empty-string"
+    username = "your-github-username"
+    repo = "your-repo-name"
+    ```
+    This file can also be created with example data by running the application
 ---
 
 ## Running the Application
