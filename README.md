@@ -45,7 +45,7 @@ This version is a complete refactor using [Textual](https://textual.textualize.i
 ## Running the Application
 
 ```bash
-python3 -m textual_app.app
+python3 main.py
 ```
 
 ---

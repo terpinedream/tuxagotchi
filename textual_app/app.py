@@ -1,15 +1,15 @@
-from datetime import datetime, timezone, timedelta
 import asyncio
+from datetime import datetime, timedelta, timezone
 
+from textual import log
 from textual.app import App
 from textual.containers import Horizontal
-from textual import log
+
+from github_api import get_recent_commit_time
+from textual_app.todo_widget import TodoWidget
 
 from .tux import Tux
 from .tux_widget import TuxWidget
-from textual_app.todo_widget import TodoWidget
-from github_api import get_recent_commit_time
-from config import load_config
 
 
 class TuxApp(App):
@@ -17,12 +17,12 @@ class TuxApp(App):
 
     BINDINGS = [("q", "quit", "Quit")]
 
-    async def on_mount(self) -> None:
-        # Load user config
-        config = load_config()
+    def __init__(self, config):
+        super().__init__()
         self.username = config["github"]["username"]
         self.repo = config["github"]["repo"]
 
+    async def on_mount(self) -> None:
         # GitHub commit tracking
         self.last_valid_commit_time = None
         self.last_checked = datetime.min.replace(tzinfo=timezone.utc)
@@ -79,11 +79,6 @@ class TuxApp(App):
             log(f"[✓] Fetched new commit time: {commit_time}")
         elif not self.last_valid_commit_time:
             log("[!] No commit found, and no fallback yet.")
-            #self.tux.mood = "sad"
+            # self.tux.mood = "sad"
 
         self.tux_widget.refresh()
-
-
-if __name__ == "__main__":
-    app = TuxApp()
-    app.run()
