@@ -40,7 +40,6 @@ class TuxApp(App):
         # Initialize Todo UI
         self.todo_widget = TodoWidget(id="todo-widget")
         self._style_todo_widget()
-        self._style_todo_widget()
 
         # Layout container
         container = Horizontal(self.tux_widget, self.todo_widget, id="main-container")
@@ -59,14 +58,13 @@ class TuxApp(App):
         self.tux_widget.styles.margin = (0, 0, 0, 0)
 
     def _style_todo_widget(self) -> None:
-        self.todo_widget.styles.flex = 1
         self.todo_widget.styles.width = 50
+        self.todo_widget.styles.min_width = 50
         self.todo_widget.styles.max_width = 50
         self.todo_widget.styles.height = 35
         self.todo_widget.styles.max_height = 35
-
-        self.todo_widget.styles.padding = (0, 0)
         self.todo_widget.styles.margin = (0, 0, 0, 0)
+        self.todo_widget.styles.padding = (0, 0)
 
     async def check_github(self) -> None:
         now = datetime.now(timezone.utc)

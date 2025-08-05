@@ -2,27 +2,34 @@
     height: 100%;
     width: 100%;
     overflow: hidden;
-    padding: 0 0 0 0;
+    /* No display:flex or flex-direction */
 }
 
 #tux-widget {
-    width: 60;
-    padding: 0 0;
-    margin: 0 0 0 0;
+    width: 60; /* character cells */
+    padding: 0;
+    margin: 0;
     border: round white;
     background: transparent;
     color: white;
 }
 
-#todo-widget {
-    width: 40;
-    max-width: 50;
-    padding: 0 0;
-    margin: 0 0 0 0;
+
+#todo-container {
+    height: 100%;
+    width: 100%;
+    /* No display:flex or flex-direction */
+}
+
+#todo-display {
+    overflow-y: auto;
+}
+
+#todo-input {
+    width: 100%;
     border: round white;
     background: transparent;
     color: white;
-    overflow-y: auto;
 }
 
 #todo-input:focus {
@@ -31,4 +38,12 @@
     color: white;
 }
 
+#todo-title {
+    border: none;
+    background: transparent;
+    color: white;
+    text-align: center;
+    padding: 0 1;
+    height: 1;
+}
 
