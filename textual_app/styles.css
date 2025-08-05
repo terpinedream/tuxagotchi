@@ -1,0 +1,34 @@
+#main-container {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 1 1 1 1;
+}
+
+#tux-widget {
+    width: 60;
+    padding: 1 2;
+    margin: 1 0 0 0;
+    border: round cyan;
+    background: black;
+    color: white;
+}
+
+#todo-widget {
+    width: 40;
+    max-width: 50;
+    padding: 1 2;
+    margin: 1 0 0 0;
+    border: round green;
+    background: black;
+    color: white;
+    overflow-y: auto;
+}
+
+#todo-input:focus {
+    border: round yellow;
+    background: #222222;
+    color: white;
+}
+
+

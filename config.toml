@@ -1,4 +1,12 @@
 [github]
 username = "terpinedream"
-repo = "tuxtest2"
+repo = "tux2"
+
+[colors]
+accent = "cyan"
+background = "black"
+foreground = "white"
+highlight = "yellow"
+todo_border = "green"
+
 
