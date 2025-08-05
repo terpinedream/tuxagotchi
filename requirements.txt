@@ -4,3 +4,4 @@ aiohttp>=3.8.0
 PyGithub>=1.55
 xdg-base-dirs>=6.0.2
 toml>=0.10.2
+click>=8.2.1

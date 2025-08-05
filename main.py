@@ -1,14 +1,23 @@
 import sys
+from pathlib import Path
 
+import click
 import toml
 
 from config import DEFAULT_CONFIG, DEFAULT_CONFIG_PATH, load_config
 from textual_app.app import TuxApp
 
-if __name__ == "__main__":
-    # TODO: read config dir from flags
+
+@click.command()
+@click.option(
+    "--config",
+    type=click.Path(exists=True, path_type=Path),
+    help="Path to the config file.",
+    default=DEFAULT_CONFIG_PATH,
+)
+def main(config: Path):
     try:
-        config = load_config()
+        config = load_config(config)
     except FileNotFoundError as e:
         with open(DEFAULT_CONFIG_PATH, "w", encoding="UTF-8") as f:
             toml.dump(DEFAULT_CONFIG, f)
@@ -17,3 +26,7 @@ if __name__ == "__main__":
         sys.exit(0)
     app = TuxApp(config)
     app.run()
+
+
+if __name__ == "__main__":
+    main()

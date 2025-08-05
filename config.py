@@ -8,6 +8,6 @@ DEFAULT_CONFIG = {"github": {"username": "terpinedream", "repo": "tuxagotchi"}}
 DEFAULT_CONFIG_PATH = xdg_config_home() / "tuxagotchi.toml"
 
 
-def load_config(path: Path = DEFAULT_CONFIG_PATH):
+def load_config(path: Path):
     with open(path, "r") as f:
         return toml.load(f)
