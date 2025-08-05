@@ -1,0 +1,5 @@
+textual>=0.10.0
+rich>=13.0.0
+aiohttp>=3.8.0
+PyGithub>=1.55
+
