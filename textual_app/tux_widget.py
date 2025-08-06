@@ -28,14 +28,13 @@ class TuxWidget(Widget):
 
     def on_mount(self):
         # Set a timer to increment tick every 0.5 seconds
-        self._timer = self.set_interval(3, self.increment_tick)
+        self._timer = self.set_interval(2, self.increment_tick)
 
     def increment_tick(self):
         self.tick += 1
+        self.refresh()
 
     def render(self) -> Panel:
-        self.tux.fetch_commits()
-
         art = center_ascii(load_ascii(self.tux.mood, self.tick))
         last_commit_td = self.tux.time_since_commit()
         countdown_td = self.tux.time_until_next_mood()
@@ -51,7 +50,7 @@ class TuxWidget(Widget):
             "",
             f"[bold]Mood:[/bold] {self.tux.mood.upper()}",
             f"[bold]Repo:[/bold] {self.repo_name}",
-            f"[bold]Committed:[/bold] {last_commit_text} ago",
+            f"[bold]Committed:[/bold] {last_commit_text}",
         ]
         if countdown_td:
             hunger_bar = generate_block_bar(self.tux, self.tick, length=10)

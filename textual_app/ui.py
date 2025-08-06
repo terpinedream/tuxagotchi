@@ -27,7 +27,7 @@ def load_ascii(mood: str, tick: int) -> str:
     return "".join(base_lines if tick % 2 == 0 else alt_lines)
 
 
-tux_style = "bold cyan"
+tux_style = "bold white"
 
 
 def format_timedelta(td: timedelta) -> str:
@@ -43,8 +43,8 @@ def format_timedelta(td: timedelta) -> str:
 
 
 class CustomStyles:
-    tux_style = "bold white on black"
-    todo_style = "bold green"
+    tux_style = None
+    todo_style = None
 
 
 def generate_block_bar(tux: object, tick: int, length: int = 10) -> str:

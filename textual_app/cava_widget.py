@@ -73,7 +73,7 @@ class CavaWidget(Widget):
 
             panel = Panel(
                 Text(visual, justify="center"),
-                title="Audio Visualizer",
+                title="♫",
                 border_style="white",
                 box=box.ROUNDED,
             )

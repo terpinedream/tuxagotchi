@@ -11,6 +11,8 @@ from textual_app.tux_widget import TuxWidget
 from textual_app.todo_widget import TodoWidget
 from config import load_config
 from textual_app.ui_helpers import generate_css
+from textual_app.ascii_loader import preload_ascii_frames
+from textual.widgets import Static
 
 
 class TuxApp(App):
@@ -20,10 +22,13 @@ class TuxApp(App):
     CSS_PATH = "styles.css"
 
     async def on_mount(self) -> None:
+        # Preload ascii for better proformance
+        preload_ascii_frames()
         # Load user config including colors
         config = load_config()
         self.username = config["github"]["username"]
         self.repo = config["github"]["repo"]
+        self.token = config["github"]["token"]
         self.theme_colors = config["colors"]
 
         # GitHub commit tracking
@@ -45,7 +50,21 @@ class TuxApp(App):
         await self.mount(top_row)
         await self.mount(self.cava_widget)
 
-        self.set_interval(60, self.check_github)
+        # Keybinds bar
+        self.keybinds = Static(
+            "[bold][/bold]【q ➡ Quit】【a ➡ Insert】【x ➡ Delete】【j/k ➡ Up/Down】【esc ➡ Navigate】",
+            id="keybinds",
+        )
+        self.keybinds.styles.dock = "bottom"
+        self.keybinds.styles.height = 1
+        self.keybinds.styles.background = "transparent"
+        self.keybinds.styles.color = "white"
+        self.keybinds.styles.padding = (0, 1)
+        await self.mount(self.keybinds)
+
+        # Reduced check interval from 60
+        # Token implementation now increases rate limit to 5k/hr
+        self.set_interval(30, self.check_github)
 
     def _style_tux_widget(self) -> None:
         self.tux_widget.styles.flex = 1
@@ -64,7 +83,7 @@ class TuxApp(App):
         self.todo_widget.styles.padding = (0, 0)
 
     def _style_cava_widget(self) -> None:
-        self.cava_widget.styles.height = 2
+        self.cava_widget.styles.height = 3
         self.cava_widget.styles.width = 86
         self.cava_widget.styles.margin = (0, 0, 0, 0)
         self.cava_widget.styles.padding = (0, 0)
@@ -76,16 +95,14 @@ class TuxApp(App):
             return
         self.last_checked = now
         commit_time = await asyncio.to_thread(
-            get_recent_commit_time, self.username, self.repo
+            get_recent_commit_time, self.username, self.repo, self.token
         )
-        if commit_time:
+        if commit_time and commit_time != self.last_valid_commit_time:
             self.last_valid_commit_time = commit_time
             self.tux.last_commit_time = commit_time
             self.tux.update_mood(commit_time)
+            self.tux_widget.refresh()
             log(f"[✓] Fetched new commit time: {commit_time}")
-        elif not self.last_valid_commit_time:
-            log("[!] No commit found, and no fallback yet.")
-        self.tux_widget.refresh()
 
 
 def generate_css_file():

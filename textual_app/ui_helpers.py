@@ -1,28 +1,11 @@
 from datetime import timedelta
 from typing import Optional
+from textual_app.ascii_loader import ASCII_FRAMES
 
 
 def load_ascii(mood: str, tick: int) -> str:
-    base_path = f"assets/{mood}.txt"
-    alt_path = f"assets/{mood}2.txt"
-
-    try:
-        with open(base_path) as f:
-            base_lines = f.readlines()
-    except FileNotFoundError:
-        base_lines = ["(?)\n"]
-
-    try:
-        with open(alt_path) as f:
-            alt_lines = f.readlines()
-    except FileNotFoundError:
-        alt_lines = base_lines
-
-    max_height = max(len(base_lines), len(alt_lines))
-    base_lines += ["\n"] * (max_height - len(base_lines))
-    alt_lines += ["\n"] * (max_height - len(alt_lines))
-
-    return "".join(base_lines if tick % 2 == 0 else alt_lines)
+    frame_index = tick % 2
+    return ASCII_FRAMES.get(mood, ["[Missing mood]"] * 2)[frame_index]
 
 
 def format_timedelta(td: timedelta) -> str:
@@ -70,9 +53,6 @@ def generate_block_bar(tux: object, tick: int, length: int = 10) -> str:
 def center_ascii(art: str, width: int = 32) -> str:
     lines = art.splitlines()
     return "\n".join(line.center(width) for line in lines)
-
-
-# TODO:
 
 
 def generate_css(colors: dict) -> str:

@@ -1,6 +1,8 @@
 [github]
-username = "terpinedream"
-repo = "wallpapers"
+username = "GITHUBUSERNAME"
+repo = "REPONAME"
+token = "TOKENHERE" # Token to prevent rate limit
+
 
 [colors]
 accent = "white"

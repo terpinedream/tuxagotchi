@@ -1,3 +1,4 @@
+from pathlib import Path
 from datetime import datetime, timedelta, timezone
 from github_api import get_recent_commits
 
@@ -9,6 +10,40 @@ class Tux:
         self.last_commit_time = None
         self.last_commit_data = []
         self.mood = "neutral"
+
+        # Animation
+        self.frame_index = 0
+        self.frames_by_mood = {
+            "happy": [],
+            "neutral": [],
+            "sad": [],
+            "dead": [],  # Optional: you can add dead frames if desired
+        }
+
+        self.load_frames()
+
+    def load_frames(self):
+        assets_dir = Path(__file__).parent / "assets"
+        for mood in ["happy", "neutral", "sad"]:
+            for i in range(1, 3):  # frame_1.txt, frame_2.txt
+                frame_file = assets_dir / f"{mood}_{i}.txt"
+                if frame_file.exists():
+                    self.frames_by_mood[mood].append(frame_file.read_text())
+                else:
+                    self.frames_by_mood[mood].append(f"[Missing: {mood}_{i}.txt]")
+
+        # Optional: Dead mood default frame
+        # self.frames_by_mood["dead"] = ["(×_×)", "(RIP)"]
+
+    def get_current_frames(self):
+        return self.frames_by_mood.get(self.mood, ["(?)", "(?)"])
+
+    def get_frame(self):
+        frames = self.get_current_frames()
+        return frames[self.frame_index % len(frames)]
+
+    def next_frame(self):
+        self.frame_index += 1
 
     def update_mood(self, commit_time=None):
         if commit_time:

@@ -1,12 +1,18 @@
+Screen {
+  background: black;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
 
 #main-container {
     height: 100%;
     width: 100%;
-    overflow: hidden;
-    padding: 1 1 1 1;
+    padding: 0 0 0 0;
 }
 
 #root-container {
+    background: transparent;
     height: 100%;
     width: 100%;
 }
