@@ -1,14 +1,13 @@
 from datetime import datetime, timezone, timedelta
 import asyncio
 import os
-
 from github_api import get_recent_commit_time
 from textual.app import App
-from textual.containers import Horizontal
+from textual.containers import Horizontal, Vertical
 from textual import log
-
-from .tux import Tux
-from .tux_widget import TuxWidget
+from textual_app.cava_widget import CavaWidget
+from textual_app.tux import Tux
+from textual_app.tux_widget import TuxWidget
 from textual_app.todo_widget import TodoWidget
 from config import load_config
 from textual_app.ui_helpers import generate_css
@@ -18,7 +17,6 @@ class TuxApp(App):
     """Main Tuxagotchi Textual App"""
 
     BINDINGS = [("q", "quit", "Quit")]
-
     CSS_PATH = "styles.css"
 
     async def on_mount(self) -> None:
@@ -37,17 +35,16 @@ class TuxApp(App):
         self.tux_widget = TuxWidget(self.tux, self.repo)
         self._style_tux_widget()
 
-        # Initialize Todo UI
         self.todo_widget = TodoWidget(id="todo-widget")
         self._style_todo_widget()
 
-        # Layout container
-        container = Horizontal(self.tux_widget, self.todo_widget, id="main-container")
-        container.styles.height = "100%"
-        container.styles.width = "100%"
-        container.styles.overflow = "hidden"
+        self.cava_widget = CavaWidget(id="cava-widget")
+        self._style_cava_widget()
 
-        await self.mount(container)
+        top_row = Horizontal(self.tux_widget, self.todo_widget, id="main-container")
+        await self.mount(top_row)
+        await self.mount(self.cava_widget)
+
         self.set_interval(60, self.check_github)
 
     def _style_tux_widget(self) -> None:
@@ -58,24 +55,29 @@ class TuxApp(App):
         self.tux_widget.styles.margin = (0, 0, 0, 0)
 
     def _style_todo_widget(self) -> None:
-        self.todo_widget.styles.width = 50
-        self.todo_widget.styles.min_width = 50
-        self.todo_widget.styles.max_width = 50
+        self.todo_widget.styles.width = 20
+        self.todo_widget.styles.min_width = 20
+        self.todo_widget.styles.max_width = 20
         self.todo_widget.styles.height = 35
         self.todo_widget.styles.max_height = 35
         self.todo_widget.styles.margin = (0, 0, 0, 0)
         self.todo_widget.styles.padding = (0, 0)
+
+    def _style_cava_widget(self) -> None:
+        self.cava_widget.styles.height = 2
+        self.cava_widget.styles.width = 86
+        self.cava_widget.styles.margin = (0, 0, 0, 0)
+        self.cava_widget.styles.padding = (0, 0)
+        self.cava_widget.styles.dock = "top"
 
     async def check_github(self) -> None:
         now = datetime.now(timezone.utc)
         if now - self.last_checked < timedelta(seconds=60):
             return
         self.last_checked = now
-
         commit_time = await asyncio.to_thread(
             get_recent_commit_time, self.username, self.repo
         )
-
         if commit_time:
             self.last_valid_commit_time = commit_time
             self.tux.last_commit_time = commit_time
@@ -83,7 +85,6 @@ class TuxApp(App):
             log(f"[✓] Fetched new commit time: {commit_time}")
         elif not self.last_valid_commit_time:
             log("[!] No commit found, and no fallback yet.")
-
         self.tux_widget.refresh()
 
 

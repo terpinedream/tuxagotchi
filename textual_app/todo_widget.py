@@ -24,20 +24,20 @@ class TodoWidget(Widget):
 
     async def on_mount(self):
         # Fix size on internal widgets too:
-        self.todo_display.styles.width = 50
-        self.todo_display.styles.min_width = 50
-        self.todo_display.styles.max_width = 50
+        self.todo_display.styles.width = 35
+        self.todo_display.styles.min_width = 35
+        self.todo_display.styles.max_width = 35
 
-        self.styles.width = 50
-        self.styles.min_width = 50
-        self.styles.max_width = 50
+        self.styles.width = 35
+        self.styles.min_width = 35
+        self.styles.max_width = 35
 
         container = self.query_one("#todo-container")
-        container.styles.width = 50
-        container.styles.min_width = 50
-        container.styles.max_width = 50
+        container.styles.width = 35
+        container.styles.min_width = 35
+        container.styles.max_width = 35
 
-        self.todo_display.styles.height = "1fr"
+        self.todo_display.styles.height = "32"
         self.todo_display.styles.overflow = "auto"
         self.todo_display.styles.scrollbar_size_vertical = 1
         self.input.styles.dock = "bottom"

@@ -1,12 +1,12 @@
 [github]
 username = "terpinedream"
-repo = "tuxtest"
+repo = "wallpapers"
 
 [colors]
-accent = "cyan"
-background = "black"
+accent = "white"
+background = "transparent"
 foreground = "white"
-highlight = "yellow"
-todo_border = "green"
+highlight = "white"
+todo_border = "white"
 
 

@@ -72,61 +72,59 @@ def center_ascii(art: str, width: int = 32) -> str:
     return "\n".join(line.center(width) for line in lines)
 
 
+# TODO:
+
+
 def generate_css(colors: dict) -> str:
     """
     Generate CSS string with colors from config.
     """
-
     return f"""
 #main-container {{
     height: 100%;
     width: 100%;
     overflow: hidden;
     padding: 1 1 1 1;
-    gap: 1;
+}}
+
+#root-container {{
+    height: 100%;
+    width: 100%;
 }}
 
 #tux-widget {{
-    flex: 0 0 auto;
     width: 60;
     padding: 1 2;
     margin: 1 0 0 0;
-    border: round;
-    border-color: {colors["accent"]};
+    border: round {colors["accent"]};
     background: {colors["background"]};
     color: {colors["foreground"]};
 }}
 
 #todo-widget {{
-    flex: 1 1 auto;
-    min-width: 40;
-    max-width: 50;
+    min-width: 20;
+    max-width: 20;
     padding: 1 2;
     margin: 1 0 0 0;
-    border: round;
-    border-color: {colors["todo_border"]};
-    background: {colors["background"]};
+    border: none;
+    background: transparent;
     color: {colors["foreground"]};
     overflow-y: auto;
 }}
 
-#todo-input:focus {{
-    border-color: {colors["highlight"]};
-    background: #222222;
+#cava-widget {{
+    height: 2;
+    width: 100%;
+    padding: 1 2;
+    margin: 1 0 0 0;
+    border: round {colors["accent"]};
+    background: {colors["background"]};
     color: {colors["foreground"]};
 }}
 
-/* Scrollbar styles for todo display */
-#todo-display::-webkit-scrollbar {{
-    width: 8px;
-}}
-
-#todo-display::-webkit-scrollbar-thumb {{
-    background-color: {colors["accent"]};
-    border-radius: 4px;
-}}
-
-#todo-display::-webkit-scrollbar-track {{
-    background: {colors["background"]};
+#todo-input {{
+    border: round white;
+    background: transparent;
+    color: {colors["foreground"]};
 }}
 """

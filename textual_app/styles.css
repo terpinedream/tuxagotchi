@@ -1,49 +1,47 @@
+
 #main-container {
     height: 100%;
     width: 100%;
     overflow: hidden;
-    /* No display:flex or flex-direction */
+    padding: 1 1 1 1;
+}
+
+#root-container {
+    height: 100%;
+    width: 100%;
 }
 
 #tux-widget {
-    width: 60; /* character cells */
-    padding: 0;
-    margin: 0;
+    width: 60;
+    padding: 1 2;
+    margin: 1 0 0 0;
     border: round white;
     background: transparent;
     color: white;
 }
 
-
-#todo-container {
-    height: 100%;
-    width: 100%;
-    /* No display:flex or flex-direction */
-}
-
-#todo-display {
-    overflow-y: auto;
-}
-
-#todo-input {
-    width: 100%;
-    border: round white;
-    background: transparent;
-    color: white;
-}
-
-#todo-input:focus {
-    border: round white;
-    background: transparent;
-    color: white;
-}
-
-#todo-title {
+#todo-widget {
+    min-width: 20;
+    max-width: 20;
+    padding: 1 2;
+    margin: 1 0 0 0;
     border: none;
     background: transparent;
     color: white;
-    text-align: center;
-    padding: 0 1;
-    height: 1;
+    overflow-y: auto;
 }
 
+#cava-widget {
+    width: 100%;
+    padding: 0 0;
+    margin: 0 0 0 0;
+    border: none;
+    background: transparent;
+    color: white;
+}
+
+#todo-input {
+    border: round white;
+    background: transparent;
+    color: white;
+}
