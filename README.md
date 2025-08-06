@@ -3,7 +3,9 @@
 Tuxagotchi is a terminal-based companion that thrives on your GitHub activity.  
 This version is a full refactor using [Textual](https://textual.textualize.io/), providing a responsive and animated terminal UI featuring a commit-based mood system, interactive TODO list, and a real-time audio visualizer powered by [Cava](https://github.com/karlstav/cava).
 
-![Screenshot](screenshots/textural/screenshot_06082025_030742.jpg)
+![Screenshot](screenshots/textural/screenshot_06082025_201007.jpg)
+![Screenshot](screenshots/textural/screenshot_06082025_201037.jpg)
+![Screenshot](screenshots/textural/screenshot_06082025_201833.jpg)
 
 ---
 
