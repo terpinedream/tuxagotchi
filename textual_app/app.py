@@ -43,12 +43,12 @@ class TuxApp(App):
         self.todo_widget = TodoWidget(id="todo-widget")
         self._style_todo_widget()
 
-        self.cava_widget = CavaWidget(id="cava-widget")
-        self._style_cava_widget()
+        # self.cava_widget = CavaWidget(id="cava-widget")
+        # self._style_cava_widget()
 
         top_row = Horizontal(self.tux_widget, self.todo_widget, id="main-container")
         await self.mount(top_row)
-        await self.mount(self.cava_widget)
+        # await self.mount(self.cava_widget)
 
         # Keybinds bar
         self.keybinds = Static(
@@ -67,7 +67,7 @@ class TuxApp(App):
         self.set_interval(30, self.check_github)
 
     def _style_tux_widget(self) -> None:
-        self.tux_widget.styles.flex = 1
+        # self.tux_widget.styles.flex = 1
         self.tux_widget.styles.padding = (0, 0)
         self.tux_widget.styles.height = 35
         self.tux_widget.styles.width = 50
@@ -82,12 +82,12 @@ class TuxApp(App):
         self.todo_widget.styles.margin = (0, 0, 0, 0)
         self.todo_widget.styles.padding = (0, 0)
 
-    def _style_cava_widget(self) -> None:
-        self.cava_widget.styles.height = 3
-        self.cava_widget.styles.width = 86
-        self.cava_widget.styles.margin = (0, 0, 0, 0)
-        self.cava_widget.styles.padding = (0, 0)
-        self.cava_widget.styles.dock = "top"
+    # def _style_cava_widget(self) -> None:
+    # self.cava_widget.styles.height = 3
+    # self.cava_widget.styles.width = 86
+    # self.cava_widget.styles.margin = (0, 0, 0, 0)
+    # self.cava_widget.styles.padding = (0, 0)
+    # self.cava_widget.styles.dock = "top"
 
     async def check_github(self) -> None:
         now = datetime.now(timezone.utc)
