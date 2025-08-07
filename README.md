@@ -23,6 +23,12 @@ This version is a full refactor using [Textual](https://textual.textualize.io/),
 
 ## Installation
 
+**Arch Linux Users**
+***Install with yay***
+```bash
+yay -S tuxagotchi
+```
+
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/terpinedream/tuxagotchi.git
@@ -58,6 +64,12 @@ This version is a full refactor using [Textual](https://textual.textualize.io/),
 ---
 
 ## Running the Application
+
+**AUR Package**
+```bash
+tuxagotchi
+```
+**From Source**
 
 ```bash
 python3 -m textual_app.app
