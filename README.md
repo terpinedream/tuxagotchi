@@ -29,6 +29,7 @@ This version is a full refactor using [Textual](https://textual.textualize.io/),
 yay -S tuxagotchi
 ```
 
+**Other**
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/terpinedream/tuxagotchi.git
