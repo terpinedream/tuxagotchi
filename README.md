@@ -29,7 +29,7 @@ This version is a full refactor using [Textual](https://textual.textualize.io/),
 yay -S tuxagotchi
 ```
 
-**Other**
+**Other** | ***please note: non-linux users should install from the 'no-cava' branch to avoid conflicts***
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/terpinedream/tuxagotchi.git
