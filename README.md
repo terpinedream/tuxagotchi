@@ -23,8 +23,8 @@ This version is a full refactor using [Textual](https://textual.textualize.io/),
 
 ## Installation
 
-**Arch Linux Users**
-***Install with yay***
+**Arch Linux Users:**
+*Install with yay*
 ```bash
 yay -S tuxagotchi
 ```
