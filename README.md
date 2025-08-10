@@ -12,7 +12,7 @@ This version is a full refactor using [Textual](https://textual.textualize.io/),
 ## Features
 
 - ASCII-rendered Tux avatar that reacts to your GitHub commit history and displays animated emotional states
-- Mood-based animation system using 6 ASCII frames (2 per mood: ecstatic, neutral, angry)
+- Mood-based animation system using 6 ASCII frames (2 per mood: happy, neutral, sad)
 - Countdown timer indicating when Tux will become hungry again
 - Interactive TODO list with vim motions
 - Real-time audio visualizer integration using Cava
@@ -29,7 +29,7 @@ This version is a full refactor using [Textual](https://textual.textualize.io/),
 yay -S tuxagotchi
 ```
 
-**Other** | ***please note: non-linux users should install from the 'no-cava' branch to avoid conflicts***
+**Other** | ***please note: non-linux users should clone from the 'no-cava' branch to avoid conflicts***
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/terpinedream/tuxagotchi.git
@@ -78,6 +78,8 @@ python3 -m textual_app.app
 
 ---
 
+**WORKING ON INTEGRATION WITH SPOTIFY CAR THING**
+---
 ## Author
 
 Maintained by [@terpinedream](https://github.com/terpinedream)
