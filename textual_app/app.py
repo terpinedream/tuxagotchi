@@ -1,9 +1,9 @@
 from datetime import datetime, timezone, timedelta
 import asyncio
 import os
-from github_api import get_recent_commit_time
+from pacman import get_last_pacman_update_time  # <-- new import
 from textual.app import App
-from textual.containers import Horizontal, Vertical
+from textual.containers import Horizontal
 from textual import log
 from textual_app.cava_widget import CavaWidget
 from textual_app.tux import Tux
@@ -22,22 +22,20 @@ class TuxApp(App):
     CSS_PATH = "styles.css"
 
     async def on_mount(self) -> None:
-        # Preload ascii for better proformance
+        # Preload ascii for better performance
         preload_ascii_frames()
-        # Load user config including colors
+
+        # Load config for theme colors
         config = load_config()
-        self.username = config["github"]["username"]
-        self.repo = config["github"]["repo"]
-        self.token = config["github"]["token"]
         self.theme_colors = config["colors"]
 
-        # GitHub commit tracking
-        self.last_valid_commit_time = None
+        # Pacman update tracking
+        self.last_valid_update_time = None
         self.last_checked = datetime.min.replace(tzinfo=timezone.utc)
 
         # Initialize Tux logic and UI
-        self.tux = Tux(username=self.username, repo=self.repo)
-        self.tux_widget = TuxWidget(self.tux, self.repo)
+        self.tux = Tux(username="arch", repo="system-updates")  # just placeholder info
+        self.tux_widget = TuxWidget(self.tux, "pacman-updates")
         self._style_tux_widget()
 
         self.todo_widget = TodoWidget(id="todo-widget")
@@ -62,12 +60,11 @@ class TuxApp(App):
         self.keybinds.styles.padding = (0, 1)
         await self.mount(self.keybinds)
 
-        # Reduced check interval from 60
-        # Token implementation now increases rate limit to 5k/hr
-        self.set_interval(30, self.check_github)
+        # Check for pacman updates every 30 seconds
+        self.set_interval(30, self.check_pacman_updates)
 
     def _style_tux_widget(self) -> None:
-        self.tux_widget.styles.flex = 1
+        # self.tux_widget.styles.flex = 1
         self.tux_widget.styles.padding = (0, 0)
         self.tux_widget.styles.height = 35
         self.tux_widget.styles.width = 50
@@ -89,20 +86,19 @@ class TuxApp(App):
         self.cava_widget.styles.padding = (0, 0)
         self.cava_widget.styles.dock = "top"
 
-    async def check_github(self) -> None:
+    async def check_pacman_updates(self) -> None:
         now = datetime.now(timezone.utc)
         if now - self.last_checked < timedelta(seconds=60):
             return
         self.last_checked = now
-        commit_time = await asyncio.to_thread(
-            get_recent_commit_time, self.username, self.repo, self.token
-        )
-        if commit_time and commit_time != self.last_valid_commit_time:
-            self.last_valid_commit_time = commit_time
-            self.tux.last_commit_time = commit_time
-            self.tux.update_mood(commit_time)
+
+        update_time = await asyncio.to_thread(get_last_pacman_update_time)
+        if update_time and update_time != self.last_valid_update_time:
+            self.last_valid_update_time = update_time
+            self.tux.last_update_time = update_time
+            self.tux.update_mood(update_time)
             self.tux_widget.refresh()
-            log(f"[✓] Fetched new commit time: {commit_time}")
+            log(f"[✓] Last pacman update: {update_time}")
 
 
 def generate_css_file():

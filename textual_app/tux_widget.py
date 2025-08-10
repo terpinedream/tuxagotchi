@@ -2,12 +2,9 @@ from textual.timer import Timer
 from textual.widget import Widget
 from textual.reactive import reactive
 from rich.panel import Panel
-from rich.columns import Columns
 from rich.text import Text
 from rich import box
 from datetime import datetime
-from textual.widgets import Static
-from textual_app.ui import CustomStyles
 from textual_app.ui_helpers import (
     load_ascii,
     format_timedelta,
@@ -23,11 +20,11 @@ class TuxWidget(Widget):
         super().__init__()
         self.tux = tux
         self.repo_name = repo_name
+        self.last_update_time = None
         self.tick = 0
         self._timer: Timer | None = None
 
     def on_mount(self):
-        # Set a timer to increment tick every 0.5 seconds
         self._timer = self.set_interval(2, self.increment_tick)
 
     def increment_tick(self):
@@ -36,24 +33,27 @@ class TuxWidget(Widget):
 
     def render(self) -> Panel:
         art = center_ascii(load_ascii(self.tux.mood, self.tick))
-        last_commit_td = self.tux.time_since_commit()
+        last_update_td = self.tux.time_since_update()
         countdown_td = self.tux.time_until_next_mood()
 
-        last_commit_text = "Unknown"
-        if last_commit_td:
-            last_commit_text = f"{format_timedelta(last_commit_td)} ago"
+        print(
+            f"[DEBUG] Mood: {self.tux.mood}, Countdown: {countdown_td}"
+        )  # Debug print
 
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        last_update_text = "Thinking..."
+        if last_update_td:
+            last_update_text = f"{format_timedelta(last_update_td)} ago"
 
         tux_lines = [
             art,
             "",
             f"[bold]Mood:[/bold] {self.tux.mood.upper()}",
-            f"[bold]Repo:[/bold] {self.repo_name}",
-            f"[bold]Committed:[/bold] {last_commit_text}",
+            f"[bold]Last Update:[/bold] {last_update_text}",
         ]
+
         if countdown_td:
             hunger_bar = generate_block_bar(self.tux, self.tick, length=10)
+            print(f"[DEBUG] Hunger bar: {hunger_bar}")  # Debug print
             tux_lines.append(
                 f"[bold]Hungry in:[/bold] {format_timedelta(countdown_td)} {hunger_bar}"
             )
