@@ -52,7 +52,7 @@ class TuxApp(App):
 
         # Keybinds bar
         self.keybinds = Static(
-            "[bold][/bold]【q ➡ Quit】【a ➡ Insert】【x ➡ Delete】【j/k ➡ Up/Down】【esc ➡ Navigate】",
+            "[bold][/bold]【q ➡ Quit】【a ➡ Insert】【x ➡ Delete】【j/k ➡ Up/Down】【esc ➡ Navigate】【Enter ➡ Toggle TODO】",
             id="keybinds",
         )
         self.keybinds.styles.dock = "bottom"
