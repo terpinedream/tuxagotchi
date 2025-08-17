@@ -8,7 +8,7 @@ from rich.panel import Panel
 from rich.text import Text
 from rich import box
 
-from .models.TodoObj import TodoObj
+from .models.TodoObj import TodoObj, TodoStorage
 
 from .todo_item import TodoItem
 
@@ -18,7 +18,8 @@ class TodoWidget(Widget):
 
     def __init__(self, id: str = "todo-widget"):
         super().__init__(id=id)
-        self.todos: list[TodoObj] = []
+        self.todoStorage = TodoStorage()
+        self.todos: list[TodoObj] = self.todoStorage.load()
         self.selected_index: int = 0
         self.insert_mode: bool = False
 
@@ -87,6 +88,7 @@ class TodoWidget(Widget):
             self.input.value = ""
             self.selected_index = len(self.todos) - 1
             await self.update_display()
+            self.todoStorage.save(self.todos)
 
         # Stay in insert mode after submitting; keep input focused for easy entry
         self.insert_mode = True
@@ -107,6 +109,7 @@ class TodoWidget(Widget):
         if event.key == "enter":
             self.todos[self.selected_index].finished = not self.todos[self.selected_index].finished
             await self.update_display()
+            self.todoStorage.save(self.todos)
             event.stop()
         if event.key == "j":
             self.selected_index = (self.selected_index + 1) % len(self.todos)
@@ -120,6 +123,7 @@ class TodoWidget(Widget):
             self.todos.pop(self.selected_index)
             self.selected_index = max(0, self.selected_index - 1)
             await self.update_display()
+            self.todoStorage.save(self.todos)
             event.stop()
         elif event.key == "a":
             self.insert_mode = True
