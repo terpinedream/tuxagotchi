@@ -8,6 +8,8 @@ from rich.panel import Panel
 from rich.text import Text
 from rich import box
 
+from .models.TodoObj import TodoObj, TodoStorage
+
 from .todo_item import TodoItem
 
 
@@ -16,7 +18,8 @@ class TodoWidget(Widget):
 
     def __init__(self, id: str = "todo-widget"):
         super().__init__(id=id)
-        self.todos: list[str] = []
+        self.todoStorage = TodoStorage()
+        self.todos: list[TodoObj] = self.todoStorage.load()
         self.selected_index: int = 0
         self.insert_mode: bool = False
 
@@ -59,11 +62,10 @@ class TodoWidget(Widget):
         lines = []
 
         for i, todo in enumerate(self.todos):
-            bullet = "◦"
-            if i == self.selected_index:
-                line = Text(f"► {bullet} {todo}", style="bold")
-            else:
-                line = Text(f"  {bullet} {todo}")
+            bullet = "✓" if todo.finished else "◦"
+            title = Text(todo.title, style="strike" if todo.finished else "")
+            prefix = "►" if i == self.selected_index else " "
+            line = Text.assemble(f"{prefix} {bullet} ", title)
             lines.append(line)
 
         todo_text = Text()
@@ -82,10 +84,11 @@ class TodoWidget(Widget):
     async def on_input_submitted(self, event: Input.Submitted):
         value = event.value.strip()
         if value:
-            self.todos.append(value)
+            self.todos.append(TodoObj(value, False))
             self.input.value = ""
             self.selected_index = len(self.todos) - 1
             await self.update_display()
+            self.todoStorage.save(self.todos)
 
         # Stay in insert mode after submitting; keep input focused for easy entry
         self.insert_mode = True
@@ -103,6 +106,11 @@ class TodoWidget(Widget):
         if not self.todos:
             return
 
+        if event.key == "enter":
+            self.todos[self.selected_index].finished = not self.todos[self.selected_index].finished
+            await self.update_display()
+            self.todoStorage.save(self.todos)
+            event.stop()
         if event.key == "j":
             self.selected_index = (self.selected_index + 1) % len(self.todos)
             await self.update_display()
@@ -115,6 +123,7 @@ class TodoWidget(Widget):
             self.todos.pop(self.selected_index)
             self.selected_index = max(0, self.selected_index - 1)
             await self.update_display()
+            self.todoStorage.save(self.todos)
             event.stop()
         elif event.key == "a":
             self.insert_mode = True
